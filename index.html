@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .permissions {
+            display: flex;
+            justify-content: space-between;
+            width: 300px;
+            margin-bottom: 20px;
+        }
+        .column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="permissions">
+    <div class="column">
+        <h3>Owner</h3>
+        <label><input type="checkbox" id="owner-read" onclick="updatePermissions()"> Read</label>
+        <label><input type="checkbox" id="owner-write" onclick="updatePermissions()"> Write</label>
+        <label><input type="checkbox" id="owner-execute" onclick="updatePermissions()"> Execute</label>
+    </div>
+    <div class="column">
+        <h3>Group</h3>
+        <label><input type="checkbox" id="group-read" onclick="updatePermissions()"> Read</label>
+        <label><input type="checkbox" id="group-write" onclick="updatePermissions()"> Write</label>
+        <label><input type="checkbox" id="group-execute" onclick="updatePermissions()"> Execute</label>
+    </div>
+    <div class="column">
+        <h3>Other</h3>
+        <label><input type="checkbox" id="other-read" onclick="updatePermissions()"> Read</label>
+        <label><input type="checkbox" id="other-write" onclick="updatePermissions()"> Write</label>
+        <label><input type="checkbox" id="other-execute" onclick="updatePermissions()"> Execute</label>
+    </div>
+</div>
+
+<div class="result">
+    <h3>Permissions:</h3>
+    <p>Symbolic: <span id="symbolic"></span></p>
+    <p>Absolute: <span id="absolute"></span></p>
+</div>
+
+<script>
+    function updatePermissions() {
+        const ownerRead = document.getElementById('owner-read').checked ? 'r' : '-';
+        const ownerWrite = document.getElementById('owner-write').checked ? 'w' : '-';
+        const ownerExecute = document.getElementById('owner-execute').checked ? 'x' : '-';
+        
+        const groupRead = document.getElementById('group-read').checked ? 'r' : '-';
+        const groupWrite = document.getElementById('group-write').checked ? 'w' : '-';
+        const groupExecute = document.getElementById('group-execute').checked ? 'x' : '-';
+        
+        const otherRead = document.getElementById('other-read').checked ? 'r' : '-';
+        const otherWrite = document.getElementById('other-write').checked ? 'w' : '-';
+        const otherExecute = document.getElementById('other-execute').checked ? 'x' : '-';
+        
+        const symbolic = ownerRead + ownerWrite + ownerExecute + ' ' + 
+                         groupRead + groupWrite + groupExecute + ' ' + 
+                         otherRead + otherWrite + otherExecute;
+        
+        const absolute = (document.getElementById('owner-read').checked ? 4 : 0) +
+                         (document.getElementById('owner-write').checked ? 2 : 0) +
+                         (document.getElementById('owner-execute').checked ? 1 : 0) + '' +
+                         ((document.getElementById('group-read').checked ? 4 : 0) +
+                          (document.getElementById('group-write').checked ? 2 : 0) +
+                          (document.getElementById('group-execute').checked ? 1 : 0)) + '' +
+                         ((document.getElementById('other-read').checked ? 4 : 0) +
+                          (document.getElementById('other-write').checked ? 2 : 0) +
+                          (document.getElementById('other-execute').checked ? 1 : 0));
+        
+        document.getElementById('symbolic').textContent = symbolic;
+        document.getElementById('absolute').textContent = absolute;
+    }
+</script>
+
+</body>
+</html>
